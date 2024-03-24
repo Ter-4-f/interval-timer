@@ -9,13 +9,14 @@ import { ReactComponent  as CancelIcon } from '../icons/x.svg';
 
 const CountdownPage = () => {
     const [searchParams, setSearchParams] = useSearchParams();
-    const minutes = searchParams.get("minutes"); // Retrieve minutes from URL params
-    const seconds = searchParams.get("seconds");
+    const minutes = parseInt(searchParams.get("minutes") || 0); // Retrieve minutes from URL params
+    const seconds = parseInt(searchParams.get("seconds") || 0);
+    const maxTime = minutes * 60 + seconds;
 
     const [isPaused, setPaused] = useState(false);
-    const [remainingTime, setRemainingTime] = useState(minutes * 60); // Convert minutes to seconds
+    const [remainingTime, setRemainingTime] = useState(maxTime); // Convert minutes to seconds
     const [progressPercentage, setProgressPercentage] = useState(100);
-    const [counter, setCounter] = useState(new Timer(minutes, seconds || 0));
+    const [counter, setCounter] = useState(new Timer(minutes, seconds));
 
     // Time
     useEffect(() => {
@@ -50,6 +51,19 @@ const CountdownPage = () => {
         setPaused(prev => !prev);
     };
 
+    function reset() {
+        // reset animation
+        var el = document.getElementById('gradiant-animation');
+        el.classList.remove("gradient");
+        setTimeout(() => {
+            el.classList.add("gradient");
+          }, 10);
+
+        // reset timer
+        setRemainingTime(prevTime => maxTime);
+        setCounter(prevCounter => new Timer(minutes, seconds));
+    }
+
     
     const progress = {
         width: `100%`,
@@ -60,7 +74,7 @@ const CountdownPage = () => {
 
     return (
         <div className='background-gradient max-size'>
-            <GradientAnimation isPaused={isPaused}></GradientAnimation>
+            <GradientAnimation isPaused={isPaused} time={maxTime}></GradientAnimation>
             <div className="max-size overlap" style={progress}>
                 <div className='timer grower'>{formattedCounter()}</div>
                 <div className="buttons-container">
@@ -69,7 +83,7 @@ const CountdownPage = () => {
                     <div className={`buttons ${isPaused ? "" : "invisible"}`}>
                         <CancelIcon className="icon" onClick={handlePause} />
                         <ResumeIcon className="icon main-icon" onClick={handlePause} />
-                        <ReloadIcon className="icon" onClick={handlePause} />
+                        <ReloadIcon className="icon" onClick={reset} />
                     </div>
                 </div>
 
