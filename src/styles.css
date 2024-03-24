@@ -1,0 +1,151 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  h1 {
+    margin-top: 0;
+    font-size: 22px;
+  }
+  
+  h2 {
+    margin-top: 0;
+    font-size: 20px;
+  }
+  
+  h3 {
+    margin-top: 0;
+    font-size: 18px;
+  }
+  
+  h4 {
+    margin-top: 0;
+    font-size: 16px;
+  }
+  
+  h5 {
+    margin-top: 0;
+    font-size: 14px;
+  }
+  
+  h6 {
+    margin-top: 0;
+    font-size: 12px;
+  }
+  
+  code {
+    font-size: 1.2em;
+  }
+  
+  ul {
+    padding-inline-start: 20px;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    color: black;
+    width: 100%;
+    height: 100vh;
+  }
+
+  #root {
+    width: 100%;
+    height: 100vh;
+    overflow: auto;
+  }
+  
+  .square {
+    background: #fff;
+    border: 1px solid #999;
+    float: left;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 34px;
+    height: 34px;
+    margin-right: -1px;
+    margin-top: -1px;
+    padding: 0;
+    text-align: center;
+    width: 34px;
+  }
+  
+  .board-row:after {
+    clear: both;
+    content: '';
+    display: table;
+  }
+  
+  .status {
+    margin-bottom: 10px;
+  }
+  .game {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .game-info {
+    margin-left: 20px;
+  }
+  
+
+
+
+
+
+  .timer {
+    --font-color: rgb(255, 219, 219);
+    width: fit-content;
+    font-size: 30vh;
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-weight: 900;
+    font-style: normal;
+    color: var(--font-color);
+    -webkit-text-fill-color: var(--font-color); /* Will override color (regardless of order) */
+    -webkit-text-stroke: 20px var(--font-color);
+    margin: auto;
+    display: flex;
+    justify-content: center; /* Align horizontal */
+    align-items: center; /* Align vertical */
+
+  }
+
+  .background-gradient {
+    background-color: #21D4FD;
+    background-image: linear-gradient(19deg, #21D4FD 0%, #7021ff 100%)
+  }
+
+
+
+  .selection {
+    display: flex;
+    width: 100%;
+    background-color: rgb(31, 0, 61);
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+  }
+
+  .selection > * {
+    min-height: 50px;
+    max-height: 75px;
+    font-size: 4vh;
+  }
+
+
+  .time {
+    font-family: monospace;
+  }
+  
+  .grower {
+    flex: 1;
+  }
+
+  .max-size {
+    width: 100%;
+    height: 100%;
+  }
