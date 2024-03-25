@@ -6,9 +6,6 @@ const GradientAnimation = ({ isPaused, time }) => {
         'animationDuration': `${time}s`
     };
 
-    console.log("Time", time);
-    console.log("paused", isPaused);
-
     return (
         <div className="gradient-container">
             <div id="gradiant-animation" className={`gradient ${isPaused ? 'paused' : ''}`} style={animation} />

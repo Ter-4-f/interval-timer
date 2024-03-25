@@ -116,7 +116,7 @@
 
 
   .timer {
-    --font-color: rgb(255, 219, 219);
+    --font-color: white;
     user-select: none;
     width: fit-content;
     font-size: 30vh;

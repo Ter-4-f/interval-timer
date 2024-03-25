@@ -8,6 +8,13 @@ export default class Timer {
         return this.minutes === 0 && this.seconds === 0;
     }
 
+    set (minutes, seconds) {
+        this.minutes = minutes || 0;
+        this.seconds = seconds || 0;
+
+        return this;
+    }
+
     decrement () {
         this.seconds--;
 
