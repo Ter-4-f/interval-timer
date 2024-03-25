@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ReactComponent  as ReloadIcon } from '../icons/reload.svg';
 import { ReactComponent  as CancelIcon } from '../icons/x.svg';
-import './FinishScreen.css'; // CSS file for styling
+import './Screens.css'; // CSS file for styling
 
 const FinishScreen = ({ isPaused, timer, handleDone, handleReset }) => {  
     const formattedCounter = () => {

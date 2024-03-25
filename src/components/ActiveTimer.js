@@ -10,7 +10,7 @@ const ActiveTimer = ({ isPaused, timer, handlePause, handleReset }) => {
     };
 
     return (
-        <div className="max-size overlap">
+        <div className="max-size centering">
             <div className='timer grower'>{formattedCounter()}</div>
             <div className="buttons-container">
                 <PauseIcon className={`icon main-icon ${isPaused ? "invisible" : ""}`} onClick={handlePause} />
