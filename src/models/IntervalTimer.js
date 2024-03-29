@@ -1,27 +1,13 @@
 export default class IntervalTimer {
-    constructor(workTimer, restTimer, rounds) {
-        this.workTimer = workTimer;
-        this.restTimer = restTimer;
-        this.rounds = rounds;
+
+    constructor(activeSeconds, breakSeconds, rounds) {
+        this.rounds = rounds || 2;
+        this.activeSeconds = activeSeconds || 60;
+        this.breakSeconds = breakSeconds || 240;
     }
 
-    isFinished () {
-        return this.minutes === 0 && this.seconds === 0;
+    getTotalTime () {
+        return (this.rounds * this.activeSeconds) + 
+              ((this.rounds -1) * this.breakSeconds);
     }
-
-    decrement () {
-        this.seconds--;
-
-        if (this.seconds < 0) {
-            this.minutes--;
-            if (this.minutes < 0) {
-                this.minutes = 0;
-                this.seconds = 0;
-            } else {
-                this.seconds = 59;
-            }
-        }
-    }
-
-
 }

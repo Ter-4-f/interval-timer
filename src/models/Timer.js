@@ -1,43 +1,16 @@
 export default class Timer {
-    constructor(minutes, seconds) {
-        this.minutes = minutes || 0;
-        this.seconds = seconds || 0;
+    constructor(rounds, activeSeconds, breakSeconds) {
+        this.rounds = rounds || 2;
+        this.activeSeconds = activeSeconds || 0;
+        this.breakSeconds = breakSeconds || 0;
     }
 
-    isFinished () {
-        return this.minutes === 0 && this.seconds === 0;
+    getTotalTime () {
+        return (this.rounds * this.activeSeconds) + 
+              ((this.rounds -1) * this.breakSeconds);
     }
 
-    set (minutes, seconds) {
-        this.minutes = minutes || 0;
-        this.seconds = seconds || 0;
-
-        return this;
-    }
-
-    decrement () {
-        this.seconds--;
-
-        if (this.seconds < 0) {
-            this.minutes--;
-            if (this.minutes < 0) {
-                this.minutes = 0;
-                this.seconds = 0;
-            } else {
-                this.seconds = 59;
-            }
-        }
-
-        return this;
-    }
-
-    increment () {
-        this.seconds++;
-
-        if (this.seconds === 60) {
-            this.seconds = 0;
-            this.minutes++;
-        }
-        return this;
+    static from(json){
+        return Object.assign(new Timer(), json);
     }
 }
