@@ -186,3 +186,14 @@ svg {
 .icon:active {
     filter: invert(80%);
 }
+
+
+
+.round-hint {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 12vh;
+    margin-right: 5vh;
+    margin-bottom: 5vh;
+}

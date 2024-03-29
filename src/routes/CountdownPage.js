@@ -22,10 +22,7 @@ const CountdownPage = () => {
     const [progressPercentage, setProgressPercentage] = useState(100);
     const [counter, setCounter] = useState(new Timer(minutes, seconds));
 
-    
-
-
-    
+        
 
     // const [playSound] = useSound('../audio/file_example_OOG_1MG.ogg');
     const playSound = () => {
