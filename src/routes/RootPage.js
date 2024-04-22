@@ -9,10 +9,12 @@ import CountdownPage from './CountdownPage';
 import CountdownScreen from '../components/CountdownScreen';
 import IntervalTimerScreen from '../components/IntervalTimerScreen';
 import Bell from '../audio/boxing-bell.mp3';
+import nosleep from 'nosleep.js';
 
 const storedTime = localStorage.getItem("timeTime") || 0;
 const storedIntervalTimer = localStorage.getItem("intervalTimerTime");
 const intervalTimer = storedIntervalTimer ? Timer.from(JSON.parse(storedIntervalTimer)) : new Timer();
+var noSleep = new nosleep();
 
 const RootPage = () => {
     const [initClick, setInitClick] = useState(false);
@@ -22,15 +24,18 @@ const RootPage = () => {
     const [intervalMaxTime, setIntervalMaxTime] = useState(intervalTimer.getTotalTime());
     const [showTimer, setShowTimer] = useState(false);
     const [showIntervalTimer, setShowIntervalTimer] = useState(false);
-    
     const [resetKey, setResetKey] = useState("Key");
+
+    noSleep.disable();
     
     const handleClickTimer = () => {
+        noSleep.enable();
         setShowTimer(prev => !prev);
         setShowIntervalTimer(_ => false);
     };
 
     const handleClickIntervalTimer = () => {
+        noSleep.enable();
         setShowTimer(_ => false);
         setShowIntervalTimer(prev => !prev);
     };
@@ -45,14 +50,10 @@ const RootPage = () => {
         setResetKey(prev => prev += "I");
     };
 
-    function stopPlay() {        
-        
-    }
     var audio = new Audio(Bell);
     audio.addEventListener('play', () => {
         if (!initClick) {
             audio.pause();
-            setInitClick(true);
         }
     }, false);
 
@@ -60,10 +61,8 @@ const RootPage = () => {
         if (!initClick) {
             // Start playing audio when the user clicks anywhere on the page,
             // to force Mobile Safari to load the audio.
-            console.log("clicked somewhere");
-            document.getElementById("screen").removeEventListener('click', initAudio, false);
-            console.log("removed")
             audio.play();
+            setInitClick(true);
         }
     }
 
@@ -83,9 +82,10 @@ const RootPage = () => {
                     <span className="time">{formatTimer(intervalTimer.getTotalTime())}</span>             
                 </button>
                 {showIntervalTimer ? <IntervalTimerConfig intervalTimer={intervalTimer} setMaxTime={setIntervalMaxTime} setIntervalTimeSceenVisible={setIntervalTimeSceenVisible} />: null}
+                {!showIntervalTimer && !showTimer ? <button className='selection' onClick={() => window.open(`/clock`,"_self")}><span>Clock</span><div className="grower"></div></button> : null}
             </div>
             }
-            { timeSceenVisible ?         <CountdownScreen key={resetKey} startTime={timer} handleDone={handleDone} onReset={handleReset} /> : ""}
+            { timeSceenVisible ?         <CountdownScreen key={resetKey} startTime={timer} audio={audio} handleDone={handleDone} onReset={handleReset} /> : ""}
             { intervalTimeSceenVisible ? <IntervalTimerScreen key={resetKey} timer={intervalTimer} audio={audio} handleDone={handleDone} onReset={handleReset} /> : ""}
         </div>
     );
@@ -146,8 +146,8 @@ const IntervalTimerConfig = ({intervalTimer, setMaxTime, setIntervalTimeSceenVis
             <div className='wrapper'>
                 <table>
                     <tbody>
-                        <tr><td>Round Time</td><td><TimerPicker value={intervalTimer.activeSeconds} onChange={handleChangeRoundSeconds} min={0} max={3600} /></td></tr>
-                        <tr><td>Break Time</td><td><TimerPicker value={intervalTimer.breakSeconds} onChange={handleChangeBreakSeconds} min={0} max={3600} /></td></tr>
+                        <tr><td>Round Time</td><td><TimerPicker value={intervalTimer.activeSeconds} onChange={handleChangeRoundSeconds} min={10} max={3600} /></td></tr>
+                        <tr><td>Break Time</td><td><TimerPicker value={intervalTimer.breakSeconds} onChange={handleChangeBreakSeconds} min={10} max={3600} /></td></tr>
                         <tr><td>Rounds</td><td><NumberPicker value={intervalTimer.rounds} onChange={handleChangeRounds} min={2} max={99} /></td></tr>
                     </tbody>
                 </table>
