@@ -5,6 +5,7 @@ import "./styles.css";
 import App from "./App";
 
 const root = createRoot(document.getElementById("root"));
+document.addEventListener('cLick', (e) => console.log("Clicked ME aaaa"), false);
 root.render(
     <App />
 );

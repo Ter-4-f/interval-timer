@@ -8,12 +8,14 @@ import { useSearchParams } from 'react-router-dom';
 import CountdownPage from './CountdownPage';
 import CountdownScreen from '../components/CountdownScreen';
 import IntervalTimerScreen from '../components/IntervalTimerScreen';
+import Bell from '../audio/boxing-bell.mp3';
 
 const storedTime = localStorage.getItem("timeTime") || 0;
 const storedIntervalTimer = localStorage.getItem("intervalTimerTime");
 const intervalTimer = storedIntervalTimer ? Timer.from(JSON.parse(storedIntervalTimer)) : new Timer();
 
 const RootPage = () => {
+    const [initClick, setInitClick] = useState(false);
     const [timeSceenVisible, setTimeSceenVisible] = useState(window.location.hash && window.location.hash.substring(1) === "timer");
     const [intervalTimeSceenVisible, setIntervalTimeSceenVisible] = useState(window.location.hash && window.location.hash.substring(1) === "interval");
     const [timer, setTimer] = useState(parseInt(storedTime));
@@ -43,8 +45,30 @@ const RootPage = () => {
         setResetKey(prev => prev += "I");
     };
 
+    function stopPlay() {        
+        
+    }
+    var audio = new Audio(Bell);
+    audio.addEventListener('play', () => {
+        if (!initClick) {
+            audio.pause();
+            setInitClick(true);
+        }
+    }, false);
+
+    function initAudio() {        
+        if (!initClick) {
+            // Start playing audio when the user clicks anywhere on the page,
+            // to force Mobile Safari to load the audio.
+            console.log("clicked somewhere");
+            document.getElementById("screen").removeEventListener('click', initAudio, false);
+            console.log("removed")
+            audio.play();
+        }
+    }
+
     return (
-        <div className='screen'>
+        <div className='screen' id="screen" onClick={initAudio}>
             { timeSceenVisible || intervalTimeSceenVisible ? "" :
             <div className='screen background'>
                 <button className='selection' onClick={handleClickTimer}>
@@ -62,7 +86,7 @@ const RootPage = () => {
             </div>
             }
             { timeSceenVisible ?         <CountdownScreen key={resetKey} startTime={timer} handleDone={handleDone} onReset={handleReset} /> : ""}
-            { intervalTimeSceenVisible ? <IntervalTimerScreen key={resetKey} timer={intervalTimer} handleDone={handleDone} onReset={handleReset} /> : ""}
+            { intervalTimeSceenVisible ? <IntervalTimerScreen key={resetKey} timer={intervalTimer} audio={audio} handleDone={handleDone} onReset={handleReset} /> : ""}
         </div>
     );
 };

@@ -15,7 +15,7 @@ const RoundHint = ({round, maxRounds}) => {
 
 
 
-const IntervalTimerScreen = ({timer, handleDone, onReset}) => {
+const IntervalTimerScreen = ({timer, audio, handleDone, onReset}) => {
     const timeIsAnIllusion = timer;
     const [key, setKey] = useState("reloadKey");
     const [round, setRound] = useState(1);
@@ -23,37 +23,15 @@ const IntervalTimerScreen = ({timer, handleDone, onReset}) => {
     const [isFinished, setFinished] = useState(false);
     const [isActive, setIsActive] = useState(false);
     
-    const playSound = () => {
-        let audio = new Audio(Bell)
-        audio.volume = 0.5;
-        audio.play();
-    }
-
-    // function reset() {
-    //     setKey(prev => prev + "I");
-        
-    //     // reset animation
-    //     var el = document.getElementById('gradiant-animation');
-    //     el.classList.remove("gradient");
-    //     setTimeout(() => {
-    //         el.classList.add("gradient");
-    //     }, 10);
-
-    //     // reset state
-    //     setRemainingTime(_ => startTime);
-    //     setFinished(_ => false);
-    //     setPaused(_ => true);
-    //     setPreparing(_ => true);
-    // }
 
     function handlePrepared () {
         setPreparing(_ => false);
         setIsActive(_ => true);
-        playSound();
+        audio.play();
     }
 
     function handleOnDone () {
-        playSound();
+        audio.play();
         setIsActive(active => {
             setRound(prevRound => {
                 if (active && prevRound >= timer.rounds) {

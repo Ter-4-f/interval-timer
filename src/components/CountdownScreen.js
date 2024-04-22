@@ -8,19 +8,12 @@ import PrepareScreen from './PrepareScreen';
 import FinishScreen from './FinishScreen';
 import Bell from '../audio/boxing-bell.mp3';
 
-const CountdownScreen = ({startTime, handleDone}) => {
+const CountdownScreen = ({startTime, audio, handleDone}) => {
     const [key, setKey] = useState("reloadKey");
     const [isPreparing, setPreparing] = useState(true);
     const [isFinished, setFinished] = useState(false);
     const [isPaused, setPaused] = useState(true);
     const [remainingTime, setRemainingTime] = useState(startTime); 
-
-    
-    const playSound = () => {
-        let audio = new Audio(Bell)
-        audio.volume = 0.5;
-        audio.play();
-    }
 
     // Time
     useEffect(() => {
@@ -30,7 +23,7 @@ const CountdownScreen = ({startTime, handleDone}) => {
             setRemainingTime(prevTime => {
                 if (prevTime == 0) {
                     setFinished(f => true);
-                    playSound();
+                    audio.play();
                 }
                 return prevTime - 1;
             });
@@ -63,7 +56,7 @@ const CountdownScreen = ({startTime, handleDone}) => {
     function handlePrepared () {
         setPreparing(_ => false);
         setPaused(_ => false);
-        playSound();
+        audio.play();
     }
     
     return (
