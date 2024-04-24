@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ReactComponent  as ReloadIcon } from '../icons/reload.svg';
 import { ReactComponent  as CancelIcon } from '../icons/x.svg';
 import './Screens.css'; // CSS file for styling

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PrepareScreen from './PrepareScreen';
 import FinishScreen from './FinishScreen';
-import Bell from '../audio/boxing-bell.mp3';
 import { ActiveTimerScreen, BreakTimerScreen } from './TimerScreen';
 
 
@@ -16,8 +15,6 @@ const RoundHint = ({round, maxRounds}) => {
 
 
 const IntervalTimerScreen = ({timer, audio, handleDone, onReset}) => {
-    const timeIsAnIllusion = timer;
-    const [key, setKey] = useState("reloadKey");
     const [round, setRound] = useState(1);
     const [isPreparing, setPreparing] = useState(true);
     const [isFinished, setFinished] = useState(false);
@@ -47,7 +44,7 @@ const IntervalTimerScreen = ({timer, audio, handleDone, onReset}) => {
     }
 
     return (
-        <div key={key} className='max-size'>
+        <div className='max-size'>
             {isPreparing
             ?   <PrepareScreen onDone={handlePrepared}/>
             :   isFinished

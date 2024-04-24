@@ -19,7 +19,8 @@ const RootPage = () => {
     const [timeSceenVisible, setTimeSceenVisible] = useState(window.location.hash && window.location.hash.substring(1) === "timer");
     const [intervalTimeSceenVisible, setIntervalTimeSceenVisible] = useState(window.location.hash && window.location.hash.substring(1) === "interval");
     const [timer, setTimer] = useState(parseInt(storedTime));
-    const [intervalMaxTime, setIntervalMaxTime] = useState(intervalTimer.getTotalTime());
+    // eslint-disable-next-line no-unused-vars
+    const [_, setIntervalMaxTime] = useState(intervalTimer.getTotalTime()); // used to update display
     const [showTimer, setShowTimer] = useState(false);
     const [showIntervalTimer, setShowIntervalTimer] = useState(false);
     const [resetKey, setResetKey] = useState("Key");
@@ -44,7 +45,7 @@ const RootPage = () => {
         setTimeSceenVisible(_ => false);
         setIntervalTimeSceenVisible(_ => false);
         // history.pushState("", document.title, window.location.pathname + window.location.search);
-        window.open(`/`,"_self");
+        // window.open(`/`,"_self");
     };
 
     function handleReset () {
@@ -101,7 +102,7 @@ const TimerConfig = ({time, setTime, setTimeSceenVisible}) => {
 
     const onStart = () => {
         localStorage.setItem("timeTime", time);
-        window.open(`/#timer`,"_self");
+        // window.open(`/#timer`,"_self");
         setTimeSceenVisible(_ => true);
         noSleep.enable();
     }
@@ -118,29 +119,22 @@ const TimerConfig = ({time, setTime, setTimeSceenVisible}) => {
 
 
 const IntervalTimerConfig = ({intervalTimer, setMaxTime, setIntervalTimeSceenVisible}) => {
-    const [_, setRounds] = useState(intervalTimer.rounds);
-    const [__, setRoundSeconds] = useState(intervalTimer.activeSeconds);
-    const [___, setBreakSeconds] = useState(intervalTimer.breakSeconds);
-
     const handleChangeRounds = (newValue) => {
-        setRounds(_ => newValue)
         intervalTimer.rounds = newValue;
         setMaxTime(_ => intervalTimer.getTotalTime());
     }
     const handleChangeRoundSeconds = (newValue) => {
-        setRoundSeconds(_ => newValue);
         intervalTimer.activeSeconds = newValue;
         setMaxTime(_ => intervalTimer.getTotalTime());
     }
     const handleChangeBreakSeconds = (newValue) => {
-        setBreakSeconds(_ => newValue);
         intervalTimer.breakSeconds = newValue;
         setMaxTime(_ => intervalTimer.getTotalTime());
     }
 
     const onStart = () => {
         localStorage.setItem("intervalTimerTime", JSON.stringify(intervalTimer));
-        window.open(`/#interval`,"_self");
+        // window.open(`/#interval`,"_self");
         setIntervalTimeSceenVisible(_ => true);
         noSleep.enable();
     }

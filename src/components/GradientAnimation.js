@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './GradientAnimation.css'; // CSS file for styling
 
 const GradientAnimation = ({ isPaused, time, gradientStyle }) => {  

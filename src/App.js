@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import CountdownPage from './routes/CountdownPage';
 import RootPage from './routes/RootPage';
 import Clock from './routes/Clock';
 
@@ -11,7 +10,6 @@ export default function AAAA() {
     return (
         <Router>
             <Routes>
-                <Route path="/countdown" element={<CountdownPage />} />
                 <Route path="/clock" element={<Clock />} />
                 <Route path="/" element={<RootPage />} />
                 {/* <Route path="*" element={<NotFound/>}/> */}

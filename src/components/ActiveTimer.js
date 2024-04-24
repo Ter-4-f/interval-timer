@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ReactComponent  as ResumeIcon } from '../icons/resume.svg';
 import { ReactComponent  as PauseIcon } from '../icons/pause.svg';
 import { ReactComponent  as ReloadIcon } from '../icons/reload.svg';
