@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import TimerPicker from '../components/TimerPicker';
 import { formatTimer } from '../utils/TimeUtils';
 import './RootPage.css';
 import Timer from '../models/Timer';
 import NumberPicker from '../components/NumberPicker';
-import { useSearchParams } from 'react-router-dom';
-import CountdownPage from './CountdownPage';
 import CountdownScreen from '../components/CountdownScreen';
 import IntervalTimerScreen from '../components/IntervalTimerScreen';
 import Bell from '../audio/boxing-bell.mp3';
@@ -26,7 +24,7 @@ const RootPage = () => {
     const [showIntervalTimer, setShowIntervalTimer] = useState(false);
     const [resetKey, setResetKey] = useState("Key");
 
-    console.log(noSleep);
+    
     if (noSleep.enabled) {        
         noSleep.disable();
     }
@@ -45,7 +43,8 @@ const RootPage = () => {
     const handleDone = () => {
         setTimeSceenVisible(_ => false);
         setIntervalTimeSceenVisible(_ => false);
-        history.pushState("", document.title, window.location.pathname + window.location.search);
+        // history.pushState("", document.title, window.location.pathname + window.location.search);
+        window.open(`/`,"_self");
     };
 
     function handleReset () {
@@ -104,7 +103,7 @@ const TimerConfig = ({time, setTime, setTimeSceenVisible}) => {
         localStorage.setItem("timeTime", time);
         window.open(`/#timer`,"_self");
         setTimeSceenVisible(_ => true);
-        noSleep.enable().then(a => console.log("ernablesded: ", noSleep, a));
+        noSleep.enable();
     }
     
     return (

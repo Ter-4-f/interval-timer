@@ -25,10 +25,8 @@ const Clock = () => {
     }, []);
 
     const handleLock = () => {
-        if (keepOn)
-            noSleep.disable();
-        else
-            noSleep.enable();
+        if (keepOn) noSleep.disable();
+        else        noSleep.enable();
         setKeepOn(prev => !prev);
     };
 
