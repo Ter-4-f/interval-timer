@@ -7,6 +7,7 @@ import ActiveTimer from './ActiveTimer';
 import PrepareScreen from './PrepareScreen';
 import FinishScreen from './FinishScreen';
 import Bell from '../audio/boxing-bell.mp3';
+import { ActiveTimerScreen } from './TimerScreen';
 
 const CountdownScreen = ({startTime, audio, handleDone}) => {
     const [key, setKey] = useState("reloadKey");
@@ -67,8 +68,8 @@ const CountdownScreen = ({startTime, audio, handleDone}) => {
                     <GradientAnimation isPaused={isPaused} time={startTime}></GradientAnimation>
                     <div className="max-size overlap">                                
                         { isFinished 
-                          ? <FinishScreen isPaused={isPaused} seconds={remainingTime} handlePause={handlePause} handleReset={reset} handleDone={handleDone}/>
-                          : <ActiveTimer  isPaused={isPaused} seconds={remainingTime} handlePause={handlePause} handleReset={reset} handleDone={handleDone} /> 
+                          ? <FinishScreen      isPaused={isPaused} seconds={remainingTime} handlePause={handlePause} handleReset={reset} handleDone={handleDone}/>
+                          : <ActiveTimerScreen isPaused={isPaused} seconds={remainingTime} onPause={handlePause} onReset={reset} onCancel={handleDone} onDone={handleDone} />    
                         }
                     </div>
                 </div>

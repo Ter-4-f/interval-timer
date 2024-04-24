@@ -5,7 +5,7 @@ import nosleep from 'nosleep.js';
 
 function formatTime () {
     const date = new Date();
-    return `${date.getHours() < 10 ? " " : ""}${date.getHours()}:${date.getMinutes() < 10 ? " " : ""}${date.getMinutes()}`;
+    return `${date.getHours() < 10 ? "0" : ""}${date.getHours()}:${date.getMinutes() < 10 ? "0" : ""}${date.getMinutes()}`;
 }
 
 var noSleep = new nosleep();

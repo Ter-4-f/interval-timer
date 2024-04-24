@@ -12,7 +12,6 @@ export default function AAAA() {
         <Router>
             <Routes>
                 <Route path="/countdown" element={<CountdownPage />} />
-                <Route path="/root" element={<RootPage />} />
                 <Route path="/clock" element={<Clock />} />
                 <Route path="/" element={<RootPage />} />
                 {/* <Route path="*" element={<NotFound/>}/> */}

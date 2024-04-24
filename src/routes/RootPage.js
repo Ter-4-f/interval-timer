@@ -26,16 +26,18 @@ const RootPage = () => {
     const [showIntervalTimer, setShowIntervalTimer] = useState(false);
     const [resetKey, setResetKey] = useState("Key");
 
-    noSleep.disable();
+    console.log(noSleep);
+    if (noSleep.enabled) {        
+        noSleep.disable();
+    }
+    
     
     const handleClickTimer = () => {
-        noSleep.enable();
         setShowTimer(prev => !prev);
         setShowIntervalTimer(_ => false);
     };
 
     const handleClickIntervalTimer = () => {
-        noSleep.enable();
         setShowTimer(_ => false);
         setShowIntervalTimer(prev => !prev);
     };
@@ -51,6 +53,7 @@ const RootPage = () => {
     };
 
     var audio = new Audio(Bell);
+    audio.volume = 0.1;
     audio.addEventListener('play', () => {
         if (!initClick) {
             audio.pause();
@@ -85,7 +88,7 @@ const RootPage = () => {
                 {!showIntervalTimer && !showTimer ? <button className='selection' onClick={() => window.open(`/clock`,"_self")}><span>Clock</span><div className="grower"></div></button> : null}
             </div>
             }
-            { timeSceenVisible ?         <CountdownScreen key={resetKey} startTime={timer} audio={audio} handleDone={handleDone} onReset={handleReset} /> : ""}
+            { timeSceenVisible ?         <CountdownScreen     key={resetKey} startTime={timer}     audio={audio} handleDone={handleDone} onReset={handleReset} /> : ""}
             { intervalTimeSceenVisible ? <IntervalTimerScreen key={resetKey} timer={intervalTimer} audio={audio} handleDone={handleDone} onReset={handleReset} /> : ""}
         </div>
     );
@@ -99,8 +102,9 @@ const TimerConfig = ({time, setTime, setTimeSceenVisible}) => {
 
     const onStart = () => {
         localStorage.setItem("timeTime", time);
-        window.open(`/root#timer`,"_self");
+        window.open(`/#timer`,"_self");
         setTimeSceenVisible(_ => true);
+        noSleep.enable().then(a => console.log("ernablesded: ", noSleep, a));
     }
     
     return (
@@ -137,8 +141,9 @@ const IntervalTimerConfig = ({intervalTimer, setMaxTime, setIntervalTimeSceenVis
 
     const onStart = () => {
         localStorage.setItem("intervalTimerTime", JSON.stringify(intervalTimer));
-        window.open(`/root#interval`,"_self");
+        window.open(`/#interval`,"_self");
         setIntervalTimeSceenVisible(_ => true);
+        noSleep.enable();
     }
     
     return (
