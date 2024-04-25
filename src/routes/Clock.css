@@ -52,3 +52,17 @@
     box-shadow: 10px 5px 5px rgba(18, 0, 96, 0.571);
     border-color: rgb(82, 82, 82);
 }
+
+.back {    
+    position: absolute;
+    left: 1vw;
+    top: 0vh;
+    width: fit-content;
+    height: fit-content;
+    text-align: center;
+    --font-color: rgba(255, 255, 255, 0.192);
+    font-size: 5vh;
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-weight: 900;
+    font-style: normal;
+}

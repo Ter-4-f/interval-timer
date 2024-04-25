@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PrepareScreen from './PrepareScreen';
 import FinishScreen from './FinishScreen';
 import { ActiveTimerScreen } from './TimerScreen';

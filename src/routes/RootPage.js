@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import TimerPicker from '../components/TimerPicker';
 import { formatTimer } from '../utils/TimeUtils';
 import './RootPage.css';
 import Timer from '../models/Timer';
-import NumberPicker from '../components/NumberPicker';
 import CountdownScreen from '../components/CountdownScreen';
 import IntervalTimerScreen from '../components/IntervalTimerScreen';
 import Bell from '../audio/boxing-bell.mp3';
 import nosleep from 'nosleep.js';
+import { NumberPicker, TimerPicker } from '../components/ScrollPicker';
 
 const storedTime = localStorage.getItem("timeTime") || 0;
 const storedIntervalTimer = localStorage.getItem("intervalTimerTime");
 const intervalTimer = storedIntervalTimer ? Timer.from(JSON.parse(storedIntervalTimer)) : new Timer();
 var noSleep = new nosleep();
+
+// TODO make app offline accessible
 
 const RootPage = () => {
     const [initClick, setInitClick] = useState(false);
@@ -110,7 +111,7 @@ const TimerConfig = ({time, setTime, setTimeSceenVisible}) => {
     return (
         <div className='config'>
             <div className='wrapper'>
-                <TimerPicker value={time} onChange={handleChange} min={0} max={3600} />
+                <TimerPicker value={time} onChange={handleChange} min={10} max={3600} />
                 <button className='start-button' onClick={onStart}>Start</button>            
             </div>
         </div>

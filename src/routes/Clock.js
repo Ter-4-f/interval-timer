@@ -30,9 +30,14 @@ const Clock = () => {
         setKeepOn(prev => !prev);
     };
 
+    const toHome = () => {
+        window.open(`/`,"_self");
+    }
+
     return (
         <div className='screen'>
             <div className='screen clock-background'>
+                <div className='back' onClick={toHome}>←</div>
                 <div className='clock-time'>{time}</div>
                 <button className='lock' onClick={handleLock}>{keepOn ? "sleep" : "lock"}</button>
             </div>
