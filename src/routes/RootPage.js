@@ -5,13 +5,15 @@ import Timer from '../models/Timer';
 import CountdownScreen from '../components/CountdownScreen';
 import IntervalTimerScreen from '../components/IntervalTimerScreen';
 import Bell from '../audio/boxing-bell.mp3';
-import nosleep from 'nosleep.js';
 import { NumberPicker, TimerPicker } from '../components/ScrollPicker';
+import { lockScreen } from '../utils/ScreenLock.js';
 
 const storedTime = localStorage.getItem("timeTime") || 0;
 const storedIntervalTimer = localStorage.getItem("intervalTimerTime");
 const intervalTimer = storedIntervalTimer ? Timer.from(JSON.parse(storedIntervalTimer)) : new Timer();
-var noSleep = new nosleep();
+const storedMuted = JSON.parse(localStorage.getItem("muted")) === true;
+// const storedMuted = true;
+
 
 // TODO make app offline accessible
 
@@ -24,13 +26,8 @@ const RootPage = () => {
     const [_, setIntervalMaxTime] = useState(intervalTimer.getTotalTime()); // used to update display
     const [showTimer, setShowTimer] = useState(false);
     const [showIntervalTimer, setShowIntervalTimer] = useState(false);
-    const [resetKey, setResetKey] = useState("Key");
-
-    
-    if (noSleep.enabled) {        
-        noSleep.disable();
-    }
-    
+    const [resetKey, setResetKey] = useState("Key"); 
+    const [muted, setMuted] = useState(storedMuted);
     
     const handleClickTimer = () => {
         setShowTimer(prev => !prev);
@@ -61,14 +58,30 @@ const RootPage = () => {
         }
     }, false);
 
-    function initAudio() {        
-        if (!initClick) {
+    function initAudio(newMuted=false) {        
+        if (!initClick && !(muted || newMuted===true)) {
             // Start playing audio when the user clicks anywhere on the page,
             // to force Mobile Safari to load the audio.
             audio.play();
             setInitClick(true);
         }
     }
+
+    var handleAudioToggle = () => {
+        setMuted(prev => {
+            localStorage.setItem("muted", JSON.stringify(!prev));
+            initAudio(!prev);
+            return !prev;
+        })
+    }
+
+    const settings = <div className='settings'>
+                        <div className='settings-item'>
+                            <div>Audio Muted</div>
+                            <input type="checkbox" name="audio_toggle" checked={muted} onChange={handleAudioToggle} />
+                        </div>
+                    </div>;
+
 
     return (
         <div className='screen' id="screen" onClick={initAudio}>
@@ -87,10 +100,13 @@ const RootPage = () => {
                 </button>
                 {showIntervalTimer ? <IntervalTimerConfig intervalTimer={intervalTimer} setMaxTime={setIntervalMaxTime} setIntervalTimeSceenVisible={setIntervalTimeSceenVisible} />: null}
                 {!showIntervalTimer && !showTimer ? <button className='selection' onClick={() => window.open(`/clock`,"_self")}><span>Clock</span><div className="grower"></div></button> : null}
+                {!showIntervalTimer && !showTimer ? settings : null}
+                
+                
             </div>
             }
-            { timeSceenVisible ?         <CountdownScreen     key={resetKey} startTime={timer}     audio={audio} handleDone={handleDone} onReset={handleReset} /> : ""}
-            { intervalTimeSceenVisible ? <IntervalTimerScreen key={resetKey} timer={intervalTimer} audio={audio} handleDone={handleDone} onReset={handleReset} /> : ""}
+            { timeSceenVisible ?         <CountdownScreen     key={resetKey} startTime={timer}     audio={audio} muted={muted} handleDone={handleDone} onReset={handleReset} /> : ""}
+            { intervalTimeSceenVisible ? <IntervalTimerScreen key={resetKey} timer={intervalTimer} audio={audio} muted={muted} handleDone={handleDone} onReset={handleReset} /> : ""}
         </div>
     );
 };
@@ -101,11 +117,12 @@ const TimerConfig = ({time, setTime, setTimeSceenVisible}) => {
         setTime(_ => newValue);
     }
 
-    const onStart = () => {
+    const onStart = async () => {
         localStorage.setItem("timeTime", time);
         // window.open(`/#timer`,"_self");
         setTimeSceenVisible(_ => true);
-        noSleep.enable();
+        // noSleep.enable();
+        lockScreen();
     }
     
     return (
@@ -137,7 +154,7 @@ const IntervalTimerConfig = ({intervalTimer, setMaxTime, setIntervalTimeSceenVis
         localStorage.setItem("intervalTimerTime", JSON.stringify(intervalTimer));
         // window.open(`/#interval`,"_self");
         setIntervalTimeSceenVisible(_ => true);
-        noSleep.enable();
+        lockScreen();
     }
     
     return (

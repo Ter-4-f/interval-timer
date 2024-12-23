@@ -14,7 +14,7 @@ const RoundHint = ({round, maxRounds}) => {
 
 
 
-const IntervalTimerScreen = ({timer, audio, handleDone, onReset}) => {
+const IntervalTimerScreen = ({timer, audio, muted, handleDone, onReset}) => {
     const [round, setRound] = useState(1);
     const [isPreparing, setPreparing] = useState(true);
     const [isFinished, setFinished] = useState(false);
@@ -24,11 +24,15 @@ const IntervalTimerScreen = ({timer, audio, handleDone, onReset}) => {
     function handlePrepared () {
         setPreparing(_ => false);
         setIsActive(_ => true);
-        audio.play();
+        if (!muted) {
+            audio.play();
+        }
     }
 
     function handleOnDone () {
-        audio.play();
+        if (!muted) {
+            audio.play();
+        }
         setIsActive(active => {
             setRound(prevRound => {
                 if (active && prevRound >= timer.rounds) {

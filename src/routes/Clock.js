@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Clock.css';
-import nosleep from 'nosleep.js';
+import { toggleWakeLock } from '../utils/ScreenLock';
 
 
 function formatTime () {
@@ -8,7 +8,6 @@ function formatTime () {
     return `${date.getHours() < 10 ? "0" : ""}${date.getHours()}:${date.getMinutes() < 10 ? "0" : ""}${date.getMinutes()}`;
 }
 
-var noSleep = new nosleep();
 
 const Clock = () => {
     new Date();
@@ -25,8 +24,9 @@ const Clock = () => {
     }, []);
 
     const handleLock = () => {
-        if (keepOn) noSleep.disable();
-        else        noSleep.enable();
+        // if (keepOn) noSleep.disable();
+        // else        noSleep.enable();
+        toggleWakeLock();
         setKeepOn(prev => !prev);
     };
 

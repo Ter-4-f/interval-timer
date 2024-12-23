@@ -3,21 +3,25 @@ import PrepareScreen from './PrepareScreen';
 import FinishScreen from './FinishScreen';
 import { ActiveTimerScreen } from './TimerScreen';
 
-const CountdownScreen = ({startTime, audio, handleDone, onReset}) => {
+const CountdownScreen = ({startTime, audio, muted, handleDone, onReset}) => {
     const [isPreparing, setPreparing] = useState(true);
     const [isFinished, setFinished] = useState(false);
     const [isPaused, setPaused] = useState(true);
 
     // Time
     function handleOnDone () {
-        audio.play();
+        if (!muted) {
+            audio.play();
+        }
         setFinished(_ => true);
     }
 
     function handlePrepared () {
         setPreparing(_ => false);
         setPaused(_ => false);
-        audio.play();
+        if (!muted) {
+            audio.play();
+        }
     }
     
     return (
