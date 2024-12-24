@@ -1,7 +1,8 @@
 FROM node:alpine
 WORKDIR /app
 
+ENV HTTPS=true
 COPY package.json .
 RUN npm install
 COPY . .
-CMD ["HTTPS=true", "npm", "start"]
+CMD ["npm", "start"]
